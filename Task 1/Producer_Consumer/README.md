@@ -44,3 +44,14 @@ If the buffer is full, the Producer waits until space becomes available.
 while (queue.size() == capacity) {
     wait();
 }
+
+After adding an item, the Producer calls:
+
+```java
+notifyAll();
+
+to notify waiting threads that the buffer state has changed.
+
+### Consumer Thread
+
+
