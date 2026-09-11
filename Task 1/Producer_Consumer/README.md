@@ -85,7 +85,7 @@ public synchronized void consume()
 The synchronized keyword ensures that only one thread at a time can access the critical section of the shared buffer. This prevents multiple threads from modifying the shared queue at the same time.
 
 ### Program Flow 
-![Program Flow Diagram](<img width="1024" height="935" alt="40451e52-3c04-4c0c-b591-b236136783d7" src="https://github.com/user-attachments/assets/3d294576-1b88-4a4f-af80-d32006373ffd" />
+![Program Flow Diagram](<img width="1267" height="1460" alt="producer_flow" src="https://github.com/user-attachments/assets/3692911a-4d19-4202-b31a-fb7673bb16c8" />
 )
 
 ## Project Structure
