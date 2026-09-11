@@ -34,10 +34,14 @@ Matrix-Multiplication/
 ├── matrix_mul.py
 ├── threaded_matrix_multiplication.gif
 └── README.md
-
+```
 ## Working Method
 
-## Working Method
-The project uses two matrices:
+The project uses two input matrices and one resultant matrix:
 
+```text
+Matrix A: 100 x 100
+Matrix B: 100 x 100
+Matrix C: 100 x 100
+```
 
