@@ -44,6 +44,7 @@ If the buffer is full, the Producer waits until space becomes available.
 while (queue.size() == capacity) {
     wait();
 }
+```java
 
 After adding an item, the Producer calls:
 
