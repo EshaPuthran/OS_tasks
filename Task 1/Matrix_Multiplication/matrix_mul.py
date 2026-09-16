@@ -1,6 +1,5 @@
 import os
 
-# Hide unnecessary TensorFlow messages
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 import time
@@ -14,9 +13,8 @@ from matplotlib.colors import LinearSegmentedColormap
 from concurrent.futures import ThreadPoolExecutor
 
 
-# ==================================================
 # MATRIX CONFIGURATION
-# ==================================================
+
 
 SIZE = 100
 
@@ -29,9 +27,8 @@ COLS_B = 100
 assert COLS_A == ROWS_B, "Matrix dimensions are not compatible"
 
 
-# ==================================================
 # GENERATE MATRICES USING TENSORFLOW
-# ==================================================
+
 
 A = tf.random.uniform(
     (ROWS_A, COLS_A),
@@ -48,19 +45,16 @@ B = tf.random.uniform(
 ).numpy()
 
 
-# ==================================================
 # RESULT MATRIX
-# ==================================================
+
 
 C = np.zeros(
     (ROWS_A, COLS_B),
     dtype=np.float32
 )
 
-
-# ==================================================
 # CALCULATE ONE MATRIX C CELL
-# ==================================================
+
 
 def calculate_cell(index):
 
@@ -75,9 +69,8 @@ def calculate_cell(index):
     return row, col, total
 
 
-# ==================================================
 # THREADED MATRIX MULTIPLICATION
-# ==================================================
+
 
 def threaded_multiplication():
 
@@ -112,9 +105,8 @@ def threaded_multiplication():
 threaded_multiplication()
 
 
-# ==================================================
 # VERIFY RESULT USING TENSORFLOW
-# ==================================================
+
 
 print("\nVerifying result using TensorFlow...")
 
@@ -129,9 +121,7 @@ else:
     print("RESULT VERIFICATION FAILED!")
 
 
-# ==================================================
 # CUSTOM COLOR MAPS
-# ==================================================
 
 # Matrix A - Purple
 purple_colors = [
@@ -181,12 +171,8 @@ gold_map = LinearSegmentedColormap.from_list(
 gold_map.set_bad(color="white", alpha=0)
 
 
-# ==================================================
 # ANIMATION CONFIGURATION
-# ==================================================
 
-# 100 cells are filled in Matrix C per frame.
-# This keeps the GIF file size suitable for GitHub.
 CELLS_PER_FRAME = 100
 
 TOTAL_CELLS = SIZE * SIZE
@@ -196,9 +182,8 @@ TOTAL_FRAMES = (
 ) // CELLS_PER_FRAME
 
 
-# ==================================================
 # CREATE FIGURE
-# ==================================================
+
 
 fig = plt.figure(
     figsize=(15, 6.5),
@@ -209,10 +194,8 @@ axA = fig.add_axes([0.03, 0.18, 0.27, 0.65])
 axB = fig.add_axes([0.365, 0.18, 0.27, 0.65])
 axC = fig.add_axes([0.70, 0.18, 0.27, 0.65])
 
-
-# ==================================================
 # DISPLAY MATRIX A
-# ==================================================
+
 
 imA = axA.imshow(
     A,
@@ -222,9 +205,9 @@ imA = axA.imshow(
 )
 
 
-# ==================================================
+
 # DISPLAY MATRIX B
-# ==================================================
+
 
 imB = axB.imshow(
     B,
@@ -234,9 +217,7 @@ imB = axB.imshow(
 )
 
 
-# ==================================================
 # MATRIX C INITIALLY BLANK
-# ==================================================
 
 display_C = np.full(
     (SIZE, SIZE),
@@ -254,9 +235,8 @@ imC = axC.imshow(
 )
 
 
-# ==================================================
 # MATRIX C BORDER
-# ==================================================
+
 
 c_border = patches.Rectangle(
     (-0.5, -0.5),
@@ -270,10 +250,8 @@ c_border = patches.Rectangle(
 
 axC.add_patch(c_border)
 
-
-# ==================================================
 # REMOVE AXES, TICKS AND NUMBERS
-# ==================================================
+
 
 for ax in [axA, axB, axC]:
 
@@ -286,9 +264,8 @@ for ax in [axA, axB, axC]:
     ax.set_frame_on(False)
 
 
-# ==================================================
 # TITLES
-# ==================================================
+
 
 axA.set_title(
     "MATRIX A",
@@ -312,9 +289,8 @@ axC.set_title(
 )
 
 
-# ==================================================
 # MULTIPLICATION AND EQUAL SYMBOLS
-# ==================================================
+
 
 fig.text(
     0.335,
@@ -336,10 +312,8 @@ fig.text(
     va="center"
 )
 
-
-# ==================================================
 # PINK ROW HIGHLIGHT FOR MATRIX A
-# ==================================================
+
 
 row_highlight = patches.Rectangle(
     (-0.5, -0.5),
@@ -354,9 +328,7 @@ row_highlight = patches.Rectangle(
 axA.add_patch(row_highlight)
 
 
-# ==================================================
 # RED COLUMN HIGHLIGHT FOR MATRIX B
-# ==================================================
 
 column_highlight = patches.Rectangle(
     (-0.5, -0.5),
@@ -371,9 +343,9 @@ column_highlight = patches.Rectangle(
 axB.add_patch(column_highlight)
 
 
-# ==================================================
+
 # STATUS TEXT
-# ==================================================
+
 
 status = fig.text(
     0.5,
@@ -395,9 +367,7 @@ description = fig.text(
 )
 
 
-# ==================================================
 # RESET ANIMATION STATE
-# ==================================================
 
 def reset_animation():
 
@@ -412,9 +382,7 @@ def reset_animation():
     status.set_text("Starting animation...")
 
 
-# ==================================================
 # ANIMATION UPDATE FUNCTION
-# ==================================================
 
 def update(frame):
 
@@ -433,14 +401,7 @@ def update(frame):
 
         display_C[row, col] = C[row, col]
 
-    # --------------------------------------------------
-    # IMPORTANT:
-    # Move highlights independently using frame number.
-    #
-    # Since 100 cells are filled per frame, using the
-    # last processed cell would always give column 99.
-    # Therefore, frame-based movement is used.
-    # --------------------------------------------------
+
 
     current_position = frame % SIZE
 
@@ -471,9 +432,8 @@ def update(frame):
     )
 
 
-# ==================================================
 # MAIN TITLE
-# ==================================================
+
 
 fig.suptitle(
     "THREADED MATRIX MULTIPLICATION",
@@ -483,10 +443,7 @@ fig.suptitle(
 )
 
 
-# ==================================================
 # SAVE GIF
-# ==================================================
-
 print("\nSaving GIF animation...")
 
 reset_animation()
@@ -511,16 +468,13 @@ print("GIF saved successfully!")
 print("File name: threaded_matrix_multiplication.gif")
 
 
-# ==================================================
 # RESET BEFORE LIVE DISPLAY
-# ==================================================
+
 
 reset_animation()
 
 
-# ==================================================
 # CREATE SEPARATE LIVE ANIMATION
-# ==================================================
 
 live_animation = FuncAnimation(
     fig,
@@ -532,10 +486,8 @@ live_animation = FuncAnimation(
     cache_frame_data=False
 )
 
-
-# ==================================================
 # DISPLAY LIVE ANIMATION
-# ==================================================
+
 
 print("\nDisplaying live animation...")
 print("Matrix A row highlight will move.")
@@ -545,9 +497,8 @@ print("Matrix C will fill progressively.")
 plt.show()
 
 
-# ==================================================
 # FINAL OUTPUT
-# ==================================================
+
 
 print("\nMatrix C is completely filled.")
 
